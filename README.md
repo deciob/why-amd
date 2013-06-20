@@ -108,7 +108,7 @@ In the **Asset Pipeline**, the order of the files required in a manifest matters
 Order also matters for the **script tags** in an HTML file, so what is the big deal here?
 
 - **JavaScript** started off as a small scripting language.
-- But nowadays it's huge and with so many files (modules) around the place, one should not be concerned about the loading order. **One thing less to remember the better!**
+- But nowadays it's huge and with so many files (modules) around the place, one should not be concerned about the loading order. **Less stuff to remember the better!**
 
 
 
@@ -261,25 +261,37 @@ Note: the reference to the **mainConfigFile** and how the order of the elements 
 
 
 
+##1
+
 The global name-space does not get polluted. 
 
 
+
+##2
 
 The order in which **JavaScript** modules are loaded does not matter.
 
 
 
+##3
+
 For big **JavaScript** applications one can optimize the payload and memory management by selectively loading different **AMD** module bundles for different parts of the app.
 
 
+
+##4
 
 For small **JavaScript** applications or more traditional **JavaScript** enhanced Websites one can optimize the code by minifying all of it in a single file. 
 
 
 
+##5
+
 It's the future. **Harmony** will have [modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules). Not **AMD** modules, but one might as well get used to the concept.
 
 
+
+##6
 
 It is a good way for approaching programs. It helps to write cleaner, more flexible, testable and better organized code.
 
