@@ -1,4 +1,12 @@
-why-amd
-=======
+### This is a test for reveal.js
 
-A presentation on AMD JavaScript
+
+### New slide?
+
+
+### Other new slide?
+
+
+```coffee
+var cup = tea
+```
