@@ -1,4 +1,6 @@
-# WHY I PREFER AMD OVER THE RAILS ASSET PIPELINE APPROACH
+# WHY I LIKE AMD 
+
+### (AND WHY I DO NOT LIKE THE RAILS ASSET PIPELINE)
 
 
 
@@ -20,29 +22,16 @@
 
 
 
-## Should we adopt it?
+## Is AMD worth it?
 - There are many different ways for organizing and loading client-side JavaScript
 - The **AMD** approach is only one among many
-
-
-
-## It depends...
-- From the project one is working on
-- And from personal taste
-
-
-
-As a **javascripter** I am not a big fan of the **Rails Asset Pipeline**.
-
-
-
-# Why?
+- Rails in its Asset Pipeline uses a different approach
 
 
 
 ## Why do I not like the asset pipeline - 1
 
-It is not truly modular and there is no implicit way of protecting variables from the global name-space.
+It is not truly modular and there is no built-in way of protecting variables from the global name-space.
 
 
 
@@ -50,13 +39,16 @@ It is not truly modular and there is no implicit way of protecting variables fro
 
 
 
-As usual, it depends...
+Depends...
 
 One could correctly argue that there is no big chance of variable names such as **backbone** or **jquery** conflicting, 
 
 - but things are more subtle than how they appear...
+- ... have a look at these two examples from our code-base:
 
 
+
+## 1
 
 ```js
 
@@ -75,17 +67,19 @@ var addCommasToNumber = function(number) {
 
 These are global variables, with very generic names.
 
-Still not a big issue? Maybe, but as the application grows, chances of conflicts grow too... **and there is something more...**
+Still not a big issue? Maybe, but as an application grows, chances of conflicts grow too... **and there is something more...**
 
 
 
 This way of organizing code does not help to keep things tidy... and maintainable. 
 Every single piece of functionality should have its right place inside an application. 
-**roundToDecimals**, for example, could live in a reusable, generic utility number-functions module. This can obviously be done within the **Asset Pipeline** too, but it is not an enforced practice, so one, in the hurry of the moment, can end up writing messy code.
+**roundToDecimals**, for example, could live in a reusable and generic numbers module. This can be achieved within the **Asset Pipeline** too, but an AMD approach makes it more obvious. 
 
 
 
-Tied to this dependency on the global namespace is the need to escape coffeScript's top-level function wrapper in this way:
+## 2
+
+In our code every coffeScript file is compiled with a top-level function wrapper, that protects the global namespace, but then, in order to escape this wrapper, modules start with something like:
 
 ```coffee
   window.Pica ||= {}
@@ -94,8 +88,8 @@ Tied to this dependency on the global namespace is the need to escape coffeScrip
 This is not elegant. **Why?**
 
 - One should not use **window** to pass around globals in the first place.
-- One should not be concerned about the existence of **window.Pica**.
-- More than anything else, it is a matter of **personal taste**.
+- One should not be concerned about the existence of **window.Pica** (why || ?).
+- In general, it is a matter of **personal taste**.
 
 
 
@@ -114,20 +108,11 @@ Order also matters for the **script tags** in an HTML file, so what is the big d
 
 ## Why do I not like the asset pipeline - 3
 
-The **Asset Pipeline** assumes, by default, that every page on a Web site should share the same **JavaScript** and **css**.
+The **Asset Pipeline** does not make it easy to split the **css** and **JavaSript** across different pages of a Web application.
 
 
 
-**Seriously?** These days even single page JavaScript applications **no longer** share the same code across their routings.
-
-
-
-Again, it's a matter of:
-
-- personal taste, 
-- and the nature of the application:
-  - If the main focus is on **Rails**, then the **Asset Pipeline** approach can be understandable. 
-  - If the main focus is **JavaScript** in the client, well... the **Asset Pipeline** and its assumptions are a bit of a pain...
+**Nevertheless** the **Asset Pipeline** has one big advantage: if using **Rails** its built for **Rails**. 
 
 
 
@@ -135,11 +120,18 @@ Again, it's a matter of:
 
 
 
+There are different implementations of the **AMD** API:
+
+- [requirejs](http://requirejs.org/)
+- [curljs](https://github.com/cujojs/curl)
+
+
+
 From the excellently explained [Authoring **AMD** modules](http://know.cujojs.com/tutorials/modules/authoring-amd-modules):
 
-
-
-**define(dependencyIds, factoryFunction);**
+```js
+define(dependencyIds, factoryFunction);
+```
 
 As you can see from the first parameter, **dependencyIds**, you can pass an array of ids into **define**. These are the ids of other modules that your module requires to do its work. The second parameter, **factoryFunction**, is a function that creates your module and will be run exactly once. The factory is called with the dependent modules as parameters. Furthermore, **it is guaranteed to run only after all of the dependencies are known to be available**. In practice, the factory typically runs just before it's needed.
 
@@ -153,14 +145,6 @@ define(['rest', 'rest/interceptor/mime'], function (rest, mime) {
     return client;
 });
 ```
-
-
-
-There are different implementations of the **AMD** API:
-
-- [requirejs](http://requirejs.org/)
-- [curljs](https://github.com/cujojs/curl)
-
 
 
 
@@ -213,9 +197,7 @@ Note: non compatible **JavaScript** libraries are declared in the **shim** secti
 
 
 
-So, do **AMD** modules get all loaded separately and asynchronously for all type of applications, in development and production?
-
-
+The fact that **AMD** modules get loaded asynchronously does not mean that modules can not be optimized.
 
 Usually for production we pass the code through an optimizer, such as:
 
@@ -328,17 +310,13 @@ In the end it all boils down to **JavaScript**, so you could use AMD modules in 
 ```
 ... and take it from there
 
-
-
 Or alternatively, use a gem such us [requirejs-rails](https://github.com/jwhitley/requirejs-rails).
 
 
 
 Would this approach work well within the wider **Rails** environment, at all levels, client side testing included?
 
-
-
-I do not know yet.
+- I do not know yet.
 
 
 
