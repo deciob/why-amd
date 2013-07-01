@@ -18,14 +18,17 @@
 
 
 
-![AMD](http://upload.wikimedia.org/wikipedia/commons/6/66/Asynchronous_Module_Definition_overview.png)
+**Asynchronous Module Definition (AMD)** is the most widely supported JavaScript module format. It's used by **cujo.js**, **jQuery**, **dojo**, **Mootools**, and several dozens of other libraries and frameworks. **AMD** is specifically designed for browser environments, but you can also use it in non-browser environments.
+
+([Authoring AMD modules](http://know.cujojs.com/tutorials/modules/authoring-amd-modules))
 
 
 
 ## Is AMD worth it?
-- There are many different ways for organizing and loading client-side JavaScript
-- The **AMD** approach is only one among many
-- Rails in its Asset Pipeline uses a different approach
+- There are many different ways for organizing and loading client-side JavaScript.
+- The **AMD** approach is only one among many.
+- Read: [CommonJS Is The Future...](http://old.alexmaccaw.com//posts/rails_js_packaging) and [Why Use Make](http://bost.ocks.org/mike/make/)
+- Rails, in its Asset Pipeline, uses a different approach. 
 
 
 
@@ -89,6 +92,7 @@ This is not elegant. **Why?**
 
 - One should not use **window** to pass around globals in the first place.
 - One should not be concerned about the existence of **window.Pica** (why || ?).
+- One is not taking advantage of new ECMASript 5 features such as [object.freeze](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
 - In general, it is a matter of **personal taste**.
 
 
@@ -279,25 +283,11 @@ It is a good way for approaching programs. It helps to write cleaner, more flexi
 
 
 
-## Why not use commonjs?
-
-
-
-[Commonjs](http://www.commonjs.org/) implementations are cool, especially [browserify](http://browserify.org/), but the specification was born and shaped from server-side **JavaScript** environments.
-
-
-
 From the words of [John Hann](https://github.com/unscriptable):
 
 (AMD) is the simplest format I've seen that doesn't require a build step. **It was designed for browsers**. You can get started with **AMD** by just downloading an **AMD** loader and writing some code. Hit F5 or Cmd-R and see your first module load.
 
 ([interview link](http://davidwalsh.name/unscriptable))
-
-
-
-Personally, when using **commonjs**, I tend to feel the source code too far away from the browser when debugging (stuff gets compiled...).
-
-Again, a matter of personal taste.
 
 
 
@@ -321,3 +311,7 @@ Would this approach work well within the wider **Rails** environment, at all lev
 
 
 References and further reading
+
+- [Interview with John Hann](http://davidwalsh.name/unscriptable)
+- [Authoring AMD modules](http://know.cujojs.com/tutorials/modules/authoring-amd-modules)
+- [WHY AMD?](http://requirejs.org/docs/whyamd.html)
